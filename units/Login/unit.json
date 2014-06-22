@@ -1,0 +1,6 @@
+{
+    "pageInputs": {
+        "userName": "string",
+        "isLogged": "boolean"
+    }
+}

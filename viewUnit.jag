@@ -1,0 +1,7 @@
+<%
+var pageStr = request.getParameter('page');
+var page =  pageStr ?  parse(pageStr) : {};
+var unitName = request.getParameter('unit');
+require('units/' + unitName + '/controller.js');
+include('units/' + unitName + '/view.jag');
+%>

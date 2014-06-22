@@ -1,0 +1,21 @@
+<% 
+include('includes/top.jag');
+var selected = session.get('unit') || application.get('unit');
+var sampleFile = new File("./units/" + selected + "/sample-input.json");
+sampleFile.open('r');
+var input = encodeURIComponent(sampleFile.readAll());
+sampleFile.close();
+%>
+<iframe frameborder="0" id="demoIframe" style="width:100%;" src="viewUnit?unit=VerticalMenu&page=<%= input %>">
+ </iframe>
+
+ <script>
+ (function () { 
+  var onResize = function () { 
+    $('#demoIframe').height($(window).height()- 180);
+  };
+  onResize();
+  $(window).resize(onResize);
+})();
+</script>
+<% include('includes/bottom.jag'); %>

@@ -1,0 +1,13 @@
+<% 
+include('includes/top.jag'); 
+var selected = session.get('unit') || application.get('unit');
+var sampleFile = new File("./units/" + selected + "/sample-input.json");
+sampleFile.open('r');
+%>
+<pre>
+<%= sampleFile.readAll() %>
+</pre>
+<%
+sampleFile.close();
+include('includes/bottom.jag');
+%>

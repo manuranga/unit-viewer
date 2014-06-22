@@ -1,0 +1,5 @@
+<% if (page.isLogged) { %>
+    <%= page.userName %>
+<% } else { %>
+    <button>Login</button>
+<% } %>

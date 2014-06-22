@@ -1,0 +1,22 @@
+<%
+/**
+* render the given unit in-line in current jag.
+* @param {string} unitName - name of the unit to be rendered.
+* @param {object?} page - additional parameters to be send to child unit.
+* the current page object is sent by default. only additional values must specified.
+*/
+function renderUnit (unitName,_page) {
+    
+    if(typeof page === "undefined"){
+        page = {};
+    }
+    _page = _page || {};
+    _page.__proto__ = page;
+
+
+    var temPage = page;
+    page = _page;
+    include('/units/' + unitName + '/view.jag');
+    page = temPage;
+}
+%>
