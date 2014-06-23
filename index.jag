@@ -1,12 +1,19 @@
 <% 
 include('includes/top.jag');
 var selected = session.get('unit') || application.get('unit');
-var sampleFile = new File("./units/" + selected + "/sample-input.json");
-sampleFile.open('r');
-var input = encodeURIComponent(sampleFile.readAll());
-sampleFile.close();
+
+
+var inputJson = session.get('input');
+if(!inputJson){
+    var sampleFile = new File("./units/" + selected + "/sample-input.json");
+    sampleFile.open('r');
+    inputJson = sampleFile.readAll();
+    sampleFile.close();  
+}
+var input = encodeURIComponent(inputJson);
+
 %>
-<iframe frameborder="0" id="demoIframe" style="width:100%;" src="viewUnit?unit=VerticalMenu&page=<%= input %>">
+<iframe frameborder="0" id="demoIframe" style="width:100%;" src="viewUnit?unit=<%= selected %>&page=<%= input %>">
  </iframe>
 
  <script>

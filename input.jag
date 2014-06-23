@@ -1,13 +1,46 @@
 <% 
 include('includes/top.jag'); 
 var selected = session.get('unit') || application.get('unit');
-var sampleFile = new File("./units/" + selected + "/sample-input.json");
-sampleFile.open('r');
+
+var inputJson;
+var toBeInputJson = request.getParameter("json");
+if (toBeInputJson){
+    session.put('input',toBeInputJson);
+    inputJson = toBeInputJson;
+}else{
+    inputJson = session.get('input');
+    if(!inputJson){
+        var sampleFile = new File("./units/" + selected + "/sample-input.json");
+        sampleFile.open('r');
+        inputJson = sampleFile.readAll();
+        sampleFile.close();  
+    }
+}
+
+
 %>
-<pre>
-<%= sampleFile.readAll() %>
-</pre>
+
+<textarea id="myTextarea"><%= inputJson %></textarea>
+
+
+<link rel="stylesheet" href="css/codemirror.css">
+<script src="js/vendor/codemirror.js"></script>
+<script src="js/vendor/javascript.js"></script>
+<script>
+</script>
+<form>
+    <input type="hidden" id="hdn-json-value" name="json">
+    <button id='btn-save-json' type="submit" class="btn btn-default">Save</button>
+</form>
+<script>
+    var editor = CodeMirror.fromTextArea(myTextarea, {
+      mode: "application/json"
+    });
+    $('#btn-save-json').click(function () {
+       $('#hdn-json-value').val(editor.getValue()); 
+    });
+</script>
 <%
-sampleFile.close();
+
 include('includes/bottom.jag');
 %>

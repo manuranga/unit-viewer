@@ -1,1 +1,6 @@
-{ }
+{
+
+    "isLogged" : false,
+    "userName" : "manu",
+    "userTenant" : "wso2.com"
+}

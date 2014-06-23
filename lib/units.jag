@@ -16,6 +16,7 @@ function renderUnit (unitName,_page) {
 
     var temPage = page;
     page = _page;
+    require('/units/' + unitName + '/controller.js');
     include('/units/' + unitName + '/view.jag');
     page = temPage;
 }

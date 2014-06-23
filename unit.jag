@@ -12,6 +12,7 @@ var toBeSelected = request.getParameter("unit");
 var selected;
 if (toBeSelected){
     session.put('unit',toBeSelected);
+    session.remove('input');
     selected = toBeSelected;
 }else{
     selected = session.get('unit') || application.get('unit');

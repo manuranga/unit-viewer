@@ -1,7 +1,22 @@
 <%
-var pageStr = request.getParameter('page');
-var page =  pageStr ?  parse(pageStr) : {};
+include_once('/lib/units.jag');
+
+function getParameterByName(name,url) {
+    name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+    var regex = new RegExp("[\\?&]" + name + "=([^&#]*)");
+    var results = regex.exec(url);
+    return results == null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
+}
+
 var unitName = request.getParameter('unit');
-require('units/' + unitName + '/controller.js');
-include('units/' + unitName + '/view.jag');
+var pageStr;
+if(!unitName){
+    var referer = request.getHeader('Referer');
+    unitName = getParameterByName('unit',referer);
+    pageStr =  getParameterByName('page',referer);
+}else{
+    var pageStr = request.getParameter('page');
+}
+var page =  pageStr ?  parse(pageStr) : {};
+renderUnit(unitName); 
 %>

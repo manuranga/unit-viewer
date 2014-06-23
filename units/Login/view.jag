@@ -1,5 +1,9 @@
 <% if (page.isLogged) { %>
-    <%= page.userName %>
+    <%= page.userName %>@<%= page.userTenant %>
 <% } else { %>
-    <button>Login</button>
+    <form action="https://10.100.0.77:9444/spoon/viewUnit?unit=Login&page=%7B%0A%0A%20%20%20%20"isLogged"%20%3A%20false%2C%0A%20%20%20%20"userName"%20%3A%20"manu"%2C%0A%20%20%20%20"userTenant"%20%3A%20"wso2.com"%0A%7D%0A">
+        <input name="userName"/>
+        <input name="password"/>
+        <button>Login</button>
+    </form>
 <% } %>
