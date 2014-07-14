@@ -1,4 +1,4 @@
-Unit Framwork
+Unit Framework
 ===========
 
 Features
@@ -32,3 +32,4 @@ TODO
 ====
 
 - [ ] Add ability to assign weights for each unit
+- [ ] Unit files (eg: view.jag) should have unique names.
