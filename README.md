@@ -27,3 +27,8 @@ Spoon Web App
 =============
 
 A Jaggery web app that acts as a scaffolding tool for developing Unit based web apps. Spoon itself is written using Unit framework
+
+TODO
+====
+
+- [ ] Add ability to assign weights for each unit
