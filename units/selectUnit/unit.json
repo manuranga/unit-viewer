@@ -1,0 +1,21 @@
+{
+    "route": [
+        {
+            "path": "/endpoints/bla",
+            "layout": "one-col",
+            "unitOfZone": [
+                {
+                    "main": "view.jag"
+                }
+            ]
+        },
+        {
+            "path": "/endpoints/xxx",
+            "unitOfZone": [
+                {
+                    "main": "other-view.jag"
+                }
+            ]
+        }
+    ]
+}

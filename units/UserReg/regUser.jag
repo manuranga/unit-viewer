@@ -1,0 +1,5 @@
+<%
+var fname = request.getParameter('fname');
+new Log().info('registed ' + fname);
+response.sendRedirect(request.getParameter('toURL'));
+%>

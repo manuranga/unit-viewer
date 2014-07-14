@@ -1,0 +1,34 @@
+<!-- Form Name -->
+<legend>Select Unit</legend>
+
+<!-- Select Basic -->
+<div class="form-group">
+  <label class="col-md-3 control-label" for="unit">Select Unit</label>
+  <div class="col-md-5">
+    <select id="unit" name="unit" class="form-control">
+       <%
+          var unit, units = model.units;
+          for (var j = 0; j < units.length ; j++) {
+            unit = units[j];
+       %>
+           <option <%= (unit==model.selected)? 'selected="selected"' : '' %> >
+              <%= unit %>
+           </option>
+       <%
+          }
+       %>
+    </select>
+  </div>
+</div>
+<script>
+$( '#unit' ).change(function() {
+    var request = $.ajax({
+        url: 'unit/setUnit',
+        type: 'POST',
+        data: { unit : this.value},
+        dataType: 'html'
+    });
+    request.done(function( msg ) {
+    });
+});
+</script>

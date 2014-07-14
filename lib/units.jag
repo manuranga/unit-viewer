@@ -1,23 +1,85 @@
 <%
+var modelOfUnit = {};
+var unitsOfZone = {};
+//var locationOfUnit = {};
+var model; //due to a jaggery but the function scope variables are on inherited.
+
 /**
-* render the given unit in-line in current jag.
-* @param {string} unitName - name of the unit to be rendered.
-* @param {object?} page - additional parameters to be send to child unit.
-* the current page object is sent by default. only additional values must specified.
-*/
-function renderUnit (unitName,_page) {
-    
-    if(typeof page === "undefined"){
-        page = {};
-    }
-    _page = _page || {};
-    _page.__proto__ = page;
-
-
-    var temPage = page;
-    page = _page;
-    require('/units/' + unitName + '/controller.js');
+ * render the given unit in-line in current jag.
+ * @param {string} unitName - name of the unit to be rendered.
+ * the current page object is sent by default. only additional values must specified.
+ */
+function renderUnit(unitName) {
+    model = modelOfUnit[unitName];
     include('/units/' + unitName + '/view.jag');
-    page = temPage;
+}
+
+function fillZone(zoneName, unitName) {
+    unitsOfZone[zoneName] = unitName;
+}
+
+function associateUnits() {
+    var unitDirs = new File("../units").listFiles();
+    var units = [];
+    for (var i = 0; i < unitDirs.length; i++) {
+        var dir = unitDirs[i];
+        if (dir.isDirectory()) {
+            var associateFile = new File("../units/" + dir.getName() + "/associate.js");
+            if (associateFile.isExists()) {
+                require(associateFile.getPath());
+            }
+        }
+    }
+}
+
+function initLayout() {
+    var unitName;
+    for (var zoneName in unitsOfZone) {
+        unitName = unitsOfZone[zoneName];
+        model = modelOfUnit[unitName] || {};
+        require('/units/' + unitName + '/controller.js');
+        modelOfUnit[unitName] = model;
+    }
+    associateUnits();
+}
+
+function defineZone(zoneName) {
+    var unitName = unitsOfZone[zoneName];
+    renderUnit(unitName);
+}
+
+function getModel(unitName) {
+    var viewModel = modelOfUnit[unitName];
+    if (!viewModel) {
+        viewModel = {};
+        modelOfUnit[unitName] = viewModel;
+    }
+    return viewModel;
+}
+
+function renderPage(layoutName) {
+    include('/layouts/' + layoutName + '.jag');
+}
+
+/**
+ * Merge the contents of two or more objects together into the first object.
+ * @param baseObj
+ * @param mixinObj
+ */
+function mergeJson(baseObj, mixinObj) {
+    var key;
+    for (key in mixinObj) {
+        if (mixinObj.hasOwnProperty(key)) {
+            if (baseObj[key]) {
+                if (Array.isArray(baseObj[key])) {
+                    baseObj[key] = baseObj[key].concat(mixinObj[key]);
+                }else{
+                    throw 'not supported yet';
+                }
+            } else {
+                baseObj[key] = mixinObj[key];
+            }
+        }
+    }
 }
 %>

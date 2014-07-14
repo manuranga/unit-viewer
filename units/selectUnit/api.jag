@@ -1,0 +1,5 @@
+<%
+var toBeSelected = request.getParameter("unit");
+session.put('unit', toBeSelected);
+session.remove('input');
+%>

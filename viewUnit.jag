@@ -17,6 +17,7 @@ if(!unitName){
 }else{
     var pageStr = request.getParameter('page');
 }
-var page =  pageStr ?  parse(pageStr) : {};
-renderUnit(unitName); 
+
+modelOfUnit[unitName] =  pageStr ?  parse(pageStr) : {};
+renderUnit(unitName);
 %>

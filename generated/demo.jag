@@ -1,0 +1,6 @@
+<%
+include_once('/lib/units.jag');
+fillZone('main', 'demoUnits');
+fillZone('left', 'VerticalMenu');
+renderPage('left-navigation');
+%>

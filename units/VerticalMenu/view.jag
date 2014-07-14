@@ -1,6 +1,7 @@
 <div >
       <%
-        var groups = page.groups;
+       new Log().info(model);
+        var groups = model.groups;
         for (var i = 0; i < groups.length ; i++) {
             var menus = groups[i].menus;
        %>

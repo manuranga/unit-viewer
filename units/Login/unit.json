@@ -2,5 +2,8 @@
     "pageInputs": {
         "userName": "string",
         "isLogged": "boolean"
+    },
+    "libary":{
+      "main":"jquary 1.9.2 "
     }
 }

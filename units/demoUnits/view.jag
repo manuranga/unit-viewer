@@ -1,0 +1,12 @@
+<iframe frameborder="0" id="demoIframe" style="width:100%;" src="viewUnit?unit=<%= model.selected %>&page=<%= model.input %>">
+ </iframe>
+
+ <script>
+ (function () {
+  var onResize = function () {
+    $('#demoIframe').height($(window).height()- 180);
+  };
+  onResize();
+  $(window).resize(onResize);
+})();
+</script>

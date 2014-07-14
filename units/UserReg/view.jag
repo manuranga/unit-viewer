@@ -1,0 +1,10 @@
+<h1>Register</h1>
+<form action="units/UserReg/regUser.jag?toURL=success.jag" method="POST">
+  <label>First Name</label>
+  <input name="fname"/>
+  <label>Last Name</label>
+  <input name="lname"/>
+  <label>Email</label>
+  <input name="email"/>
+  <button type="submit" class="btn btn-default">Submit</button>
+</form>
