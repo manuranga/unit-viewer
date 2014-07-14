@@ -31,5 +31,10 @@ A Jaggery web app that acts as a scaffolding tool for developing Unit based web 
 TODO
 ====
 
-- [ ] Add ability to assign weights for each unit
+- [ ] Add ability to assign weights for each unit.
 - [ ] Unit files (eg: view.jag) should have unique names.
+- [ ] Improve jsonMerge to merge arrays by key.
+- [ ] Fount controller to mimic dynamic routes at development time.
+- [ ] Auto generate page files.
+- [ ] Show rendering stages in UI.
+- [ ] Show route details in UI.
