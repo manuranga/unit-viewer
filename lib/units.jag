@@ -1,19 +1,22 @@
 <%
 var modelOfUnit = {};
 var unitsOfZone = {};
-//var locationOfUnit = {};
-var model; //due to a jaggery but the function scope variables are on inherited.
+var model = null; //due to a jaggery but the function scope variables are on inherited.
 
 /**
  * render the given unit in-line in current jag.
+ * the model is picked up form the values set using @see fillZone
+ *
  * @param {string} unitName - name of the unit to be rendered.
- * the current page object is sent by default. only additional values must specified.
  */
 function renderUnit(unitName) {
     model = modelOfUnit[unitName];
     include('/units/' + unitName + '/view.jag');
 }
 
+/**
+ *
+ */
 function fillZone(zoneName, unitName) {
     unitsOfZone[zoneName] = unitName;
 }
@@ -33,8 +36,8 @@ function associateUnits() {
 }
 
 function initLayout() {
-    var unitName;
-    for (var zoneName in unitsOfZone) {
+    var unitName, zoneName;
+    for (zoneName in unitsOfZone) {
         unitName = unitsOfZone[zoneName];
         model = modelOfUnit[unitName] || {};
         require('/units/' + unitName + '/controller.js');
@@ -61,23 +64,84 @@ function renderPage(layoutName) {
     include('/layouts/' + layoutName + '.jag');
 }
 
+function sortByKey(array, key) {
+    return array.sort(function (a, b) {
+        var x = a[key];
+        var y = b[key];
+        return ((x < y) ? -1 : ((x > y) ? 1 : 0));
+    });
+}
+
 /**
- * Merge the contents of two or more objects together into the first object.
+ * Merge the contents of the second array in the first.
+ * arrays will preserve the order but first arrays order has precedence.
+ */
+function mergeArray(a, b, key, otherKeys) {
+    var bValue, aValue, aKey, bKey;
+    var newKey = otherKeys.shift();
+    var newOtherKeys = otherKeys.length > 0 ? otherKeys : null;
+    var inserted;
+    var aOriginalLen = a.length;
+    for (var i = 0; i < aOriginalLen; i++) {
+        aValue = a[i];
+        aKey = aValue[key];
+        inserted = false;
+        for (var j = 0; j < b.length; j++) {
+            bValue = b[j];
+            if (bValue != null && bValue[key] == aKey) {
+                inserted = true;
+                mergeJson(a[i], bValue, newKey, newOtherKeys);
+                b[j] = null;
+            }
+        }
+    }
+    for (j = 0; j < b.length; j++) {
+        bValue = b[j];
+        if (bValue != null) {
+            a.push(bValue);
+        }
+    }
+}
+
+/**
+ * Merge the contents of the second object into the first object.
+ * @see mergeArray for array merging semantics.
  * @param baseObj
  * @param mixinObj
+ * @param {(string|Array.< string>)=} primaryKeys primary key for the array manging.
  */
-function mergeJson(baseObj, mixinObj) {
+function mergeJson(baseObj, mixinObj, primaryKeys) {
+
     var key;
     for (key in mixinObj) {
         if (mixinObj.hasOwnProperty(key)) {
-            if (baseObj[key]) {
-                if (Array.isArray(baseObj[key])) {
-                    baseObj[key] = baseObj[key].concat(mixinObj[key]);
-                }else{
-                    throw 'not supported yet';
+            var baseValue = baseObj[key];
+            var mixinValue = mixinObj[key];
+            if (Array.isArray(mixinValue)) {
+                if (Array.isArray(baseValue)) {
+                    if (arguments.length > 2) {
+                        var otherPrimaryKeys, primaryKey;
+                        var arg3 = arguments[2];
+                        if (Array.isArray(arg3)) {
+                            otherPrimaryKeys = arg3.slice(1);
+                            primaryKey = arg3[0];
+                        } else {
+                            otherPrimaryKeys = Array.slice(arguments, 3);
+                            primaryKey = arg3;
+                        }
+                        if (primaryKey) {
+                            mergeArray(baseValue, mixinValue, primaryKey, otherPrimaryKeys);
+                        } else {
+                            baseObj[key] = baseValue.concat(mixinValue);
+                        }
+                    } else {
+                        baseObj[key] = baseValue.concat(mixinValue);
+                    }
+                } else if (baseValue == null) {
+                    baseObj[key] = mixinValue;
                 }
             } else {
-                baseObj[key] = mixinObj[key];
+                baseObj[key] = mixinValue;
             }
         }
     }

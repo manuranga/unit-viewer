@@ -12,6 +12,6 @@ var linkToThis = {
     ]
 };
 
-mergeJson(getModel('VerticalMenu'), linkToThis);
+mergeJson(getModel('VerticalMenu'), linkToThis, "title", "title");
 
 

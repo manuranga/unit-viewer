@@ -1,6 +1,10 @@
 var linkToThis = {
     "groups": [
         {
+            "menus":2,
+            "title": "A"
+        },
+        {
             "menus": [
                 {
                     "link": "input",
@@ -12,4 +16,7 @@ var linkToThis = {
     ]
 };
 
-mergeJson(getModel('VerticalMenu'), linkToThis);
+mergeJson(getModel('VerticalMenu'), linkToThis, "title", "title");
+
+
+//getModel('VerticalMenu').groups = linkToThis.groups;
