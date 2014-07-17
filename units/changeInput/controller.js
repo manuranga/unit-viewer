@@ -10,7 +10,7 @@ if (toBeInputJson) {
     inputJson = session.get('input');
     if (!inputJson) {
         try {
-            sampleFile = new File("../" + selected + "/sample-input.json");
+            sampleFile = new File("../" + selected + "/sampleInput.json");
             sampleFile.open('r');
             inputJson = sampleFile.readAll();
             sampleFile.close();
