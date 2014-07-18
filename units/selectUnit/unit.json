@@ -1,4 +1,5 @@
 {
+    "weight": 100,
     "route": [
         {
             "path": "/endpoints/bla",

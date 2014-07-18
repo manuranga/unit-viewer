@@ -24,15 +24,27 @@ function fillZone(zoneName, unitName) {
 function associateUnits() {
     var unitDirs = new File("../units").listFiles();
     var units = [];
+    var associatePaths = [];
     for (var i = 0; i < unitDirs.length; i++) {
         var dir = unitDirs[i];
         if (dir.isDirectory()) {
             var associateFile = new File("../units/" + dir.getName() + "/associate.js");
+            var unitDef = require("../units/" + dir.getName() + "/unit.json");
             if (associateFile.isExists()) {
-                require(associateFile.getPath());
+                var sortableElm = {'unitName': dir.getName(), 'weight': (unitDef.weight || 0 )};
+                associatePaths.push(sortableElm);
             }
         }
     }
+
+    associatePaths.sort(function (a, b) {
+        return b.weight - a.weight;
+    });
+
+    for (i = 0; i < associatePaths.length; i++) {
+        require("../units/" + associatePaths[i].unitName + "/associate.js");
+    }
+
 }
 
 function initLayout() {
