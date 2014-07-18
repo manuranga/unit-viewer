@@ -1,0 +1,23 @@
+<!DOCTYPE html><%
+include_once('/lib/units.jag');
+initLayout();
+%>
+
+<head>
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/bootstrap-theme.min.css">
+</head>
+
+<body>
+
+    <script src="js/vendor/jquery-1.11.0.js"></script>
+    <script src="js/vendor/bootstrap.min.js"></script>
+
+    <div class="container-fluid">
+      <div class="row">
+          <% defineZone('main'); %>
+      </div>
+    </div> <!-- /container -->
+
+</body>
+</html>
