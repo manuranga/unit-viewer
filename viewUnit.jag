@@ -1,7 +1,7 @@
 <%
 include_once('/lib/units.jag');
 
-function getParameterByName(name,url) {
+function getParameterByName(name, url) {
     name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
     var regex = new RegExp("[\\?&]" + name + "=([^&#]*)");
     var results = regex.exec(url);
@@ -10,14 +10,17 @@ function getParameterByName(name,url) {
 
 var unitName = request.getParameter('unit');
 var pageStr;
-if(!unitName){
+if (!unitName) {
     var referer = request.getHeader('Referer');
-    unitName = getParameterByName('unit',referer);
-    pageStr =  getParameterByName('page',referer);
-}else{
-    var pageStr = request.getParameter('page');
+    unitName = getParameterByName('unit', referer);
+    pageStr = getParameterByName('page', referer);
+} else {
+    pageStr = request.getParameter('page');
 }
 
-modelOfUnit[unitName] =  pageStr ?  parse(pageStr) : {};
-renderUnit(unitName);
+fillZone('main', unitName);
+renderPage('minimal');
+
+//modelOfUnit[unitName] =  pageStr ?  parse(pageStr) : {};
+//renderUnit(unitName);
 %>
